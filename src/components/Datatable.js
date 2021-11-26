@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
+import { IconButton } from '@mui/material';
+import { deletePokemonById } from '../helpers/Api';
+import Swal from 'sweetalert2'
 
 export const Datatable = ( {data} ) => {
     
@@ -9,7 +12,17 @@ export const Datatable = ( {data} ) => {
     useEffect(() => {
         
     }, [data])
-      
+ 
+    const deletePokemon = (id) =>{
+        console.log('id',id);
+        deletePokemonById(id)
+        .then(res => {
+            console.log(res);
+            Swal.fire("Excelente","Pokemon Eliminado Exitosamente",'success' )
+        })
+        .catch(err => console.log(err))
+    }
+    
     return (
         <div className="mt-3">
             <table className="table table-bordered text-center" cellPadding={0} cellSpacing={0}>
@@ -20,7 +33,7 @@ export const Datatable = ( {data} ) => {
                 </thead>
                 <tbody>
                 {data.map((row) => (
-                    <tr>
+                    <tr key={row.id}>
                         {/* {columnsEng.map((column) => (
                             <td>{row[column]}</td>
                             ))} */}
@@ -28,7 +41,18 @@ export const Datatable = ( {data} ) => {
                         <td><img className="characterImg" src={row["image"]} /> </td>
                         <td>{row["attack"]}</td>
                         <td>{row["defense"]}</td>
-                        <td> <BorderColorOutlinedIcon/>   <DeleteForeverIcon /></td>
+                        <td> 
+                            <IconButton color="primary" 
+                                        aria-label="delete">
+                                <BorderColorOutlinedIcon/>
+                            </IconButton>     
+
+                            <IconButton color="primary" 
+                                        aria-label="delete"
+                                        onClick ={ () => deletePokemon(row.id)}>
+                                <DeleteForeverIcon />
+                            </IconButton>    
+                        </td>
                     </tr>
                     ))}
                 </tbody>

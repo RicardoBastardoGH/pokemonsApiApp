@@ -4,6 +4,8 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
+import { Link } from "react-router-dom";
+
 import { getPokemons } from '../helpers/Api';
 import { Datatable } from './Datatable';
 
@@ -15,7 +17,8 @@ export const PokemonList = () => {
 
     useEffect(() => {
         getPokemons()
-            .then(res => { setData( res ); })
+            .then(res => { setData( res );
+            console.log(res) })
             .catch(err => { console.log('err',err) })
     }, []) 
 
@@ -47,11 +50,14 @@ export const PokemonList = () => {
                     size="small"
                 />
 
+                <Link to="/update">
+
                 <Button variant="contained" 
                         color="primary" 
                         startIcon={<AddOutlinedIcon />} style={{textTransform: 'none', float: 'right'}} size="large">
                     Nuevo
                 </Button>
+                </Link>
           
             </div>
 

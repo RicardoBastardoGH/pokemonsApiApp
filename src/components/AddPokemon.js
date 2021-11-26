@@ -7,8 +7,10 @@ import { useForm } from '../hooks/useForm';
 import { addPokemon, addPokemon2 } from '../helpers/Api';
 import Swal from 'sweetalert2'
 
-export const AddPokemon = () => {
+export const AddPokemon = ( props ) => {
 
+    console.log(props)
+    const update = props.update; 
     const types = ["water","fire","normal","bug","poison"];
     const [ formValues, handleInputChange ] = useForm({
         name: '',
@@ -73,6 +75,7 @@ export const AddPokemon = () => {
         }
         addPokemon2(newPokemon)
         .then(res => {
+            console.log(res);
             Swal.fire("Excelente","Pokemon Creado Exitosamente",'success' )
         })
         .catch(err => console.log(err))
@@ -181,6 +184,7 @@ export const AddPokemon = () => {
                                 startIcon={<ClearOutlinedIcon />} style={{textTransform: 'none', float: 'center'}} size="large">
                                 Cancelar
                             </Button>
+                            
                         
                         </div>
                         </div>
@@ -188,6 +192,7 @@ export const AddPokemon = () => {
                 
                 </div>
             </div>
+            <h1>Update: {update}</h1>
         </div>
     )
 }
